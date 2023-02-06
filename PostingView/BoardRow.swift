@@ -1,5 +1,5 @@
 //
-//  BoardCell.swift
+//  boardRow.swift
 //  PostingView
 //
 //  Created by user on 2023/01/31.
@@ -7,16 +7,18 @@
 
 import UIKit
 
-class BoardCell: UIView {
+class BoardRow: UIView {
     
     var boardName = ""
     
     var boardDetail = ""
     
+    var boardSelectionClosure: ((String) -> ())?
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = .orange
-        
+        backgroundColor = .systemGray6
+        self.layer.cornerRadius = 8
     }
     
     required init?(coder: NSCoder) {
@@ -30,6 +32,7 @@ class BoardCell: UIView {
         
         let boardNameLbl: UILabel = {
             let lbl = UILabel()
+            lbl.font = UIFont(name: "NanumGothicOTFBold", size: 13)
             lbl.text = boardName
             return lbl
         }()
@@ -42,18 +45,20 @@ class BoardCell: UIView {
         
         let boardDetailLbl: UILabel = {
             let lbl = UILabel()
+            lbl.font = UIFont(name: "NanumGothicOTF", size: 13)
             lbl.text = boardDetail
             return lbl
         }()
         
         addSubview(boardDetailLbl)
         boardDetailLbl.snp.makeConstraints { make in
-            make.top.equalTo(boardNameLbl.snp.bottom).offset(3)
-            make.left.equalToSuperview().inset(13)
+            make.bottom.equalToSuperview().inset(9)
+            make.left.equalTo(boardNameLbl.snp.left)
         }
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("\(boardName)")
+        boardSelectionClosure?(boardName)
     }
 }

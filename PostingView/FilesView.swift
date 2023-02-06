@@ -8,6 +8,17 @@
 import UIKit
 
 class FilesView: UIView {
+    
+    var documentPickerClosure: (() -> ())?
+    
+    let filesStackview: UIStackView = {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.spacing = 8
+        stackView.distribution = .fill
+        stackView.alignment = .fill
+        return stackView
+    }()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -42,6 +53,37 @@ class FilesView: UIView {
             make.centerY.equalTo(titleLable.snp.centerY)
             make.right.equalToSuperview().inset(12)
         }
+        addBtn.addTarget(self, action: #selector(presentDocumentPicker), for: .touchUpInside)
+    
+        let scrollView = UIScrollView()
+        scrollView.backgroundColor = .gray
+        self.addSubview(scrollView)
+        scrollView.snp.makeConstraints { make in
+            make.left.right.bottom.equalToSuperview()
+            make.top.equalTo(addBtn.snp.bottom).offset(10)
+        }
+        
+        scrollView.addSubview(filesStackview)
+        filesStackview.snp.makeConstraints { make in
+            make.width.equalToSuperview()
+            make.centerX.top.bottom.equalToSuperview()
+        }
     }
-
+    
+    @objc func presentDocumentPicker() {
+        documentPickerClosure?()
+    }
+    
+    func addFile() {
+        let newFileView = FileRow()
+        newFileView.backgroundColor = .systemGray6
+        filesStackview.addArrangedSubview(newFileView)
+        newFileView.snp.makeConstraints { make in
+            make.height.equalTo(30)
+            //make.width.equalTo(300)
+        }
+        newFileView.deleteClosure = {
+            self.filesStackview.removeArrangedSubview(newFileView)
+        }
+    }
 }

@@ -8,7 +8,14 @@
 import UIKit
 
 class BoardSelectionView: UIView {
-
+    
+    let titleLabel: UILabel = {
+        let lbl = UILabel()
+        lbl.text = "일상게시판"
+        lbl.font = UIFont(name: "NanumGothicOTFBold", size: 16)
+        return lbl
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -19,33 +26,22 @@ class BoardSelectionView: UIView {
     }
     
     func setUI() {
-        
-        self.backgroundColor = .brown
-        
-        let titleLabel: UILabel = {
-            let lbl = UILabel()
-            lbl.text = "일상게시판"
-            lbl.backgroundColor = .green
-            return lbl
-        }()
-        
+        self.backgroundColor = .systemGray3
+        self.layer.cornerRadius = 8
         self.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.left.equalToSuperview().offset(20)
         }
         
-        let btn: UIButton = {
-            let btn = UIButton()
-            btn.setTitle("O", for: .normal)
-            btn.setTitleColor(.cyan, for: .normal)
-            return btn
-        }()
+        let selectionImage = UIImageView(image: UIImage(named: "selectionArrow"))
         
-        self.addSubview(btn)
-        btn.snp.makeConstraints { make in
+        self.addSubview(selectionImage)
+        selectionImage.snp.makeConstraints { make in
             make.centerY.equalTo(titleLabel.snp.centerY)
             make.right.equalToSuperview().inset(20)
+            make.width.equalTo(12)
+            make.height.equalTo(6)
         }
     }
 

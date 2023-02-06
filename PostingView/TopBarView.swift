@@ -9,6 +9,16 @@ import UIKit
 
 class TopBarView: UIView {
     
+    var closeBtnClosure:(() -> ())?
+    
+    let registerBtn: UIButton = {
+        let btn = UIButton()
+        btn.setTitle("등록", for: .normal)
+        btn.setTitleColor(.gray, for: .normal)
+        btn.titleLabel?.font = UIFont(name: "NanumGothicOTF", size: 14)
+        return btn
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUI()
@@ -18,10 +28,15 @@ class TopBarView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    @objc func closeBtnTapped() {
+        closeBtnClosure?()
+    }
+    
     func setUI() {
         let TitleLabel: UILabel = {
             let lbl = UILabel()
             lbl.text = "포스트 등록"
+            lbl.font = UIFont(name: "NanumGothicOTFBold", size: 16)
             return lbl
         }()
         
@@ -29,15 +44,12 @@ class TopBarView: UIView {
             let btn = UIButton()
             btn.setTitle("닫기", for: .normal)
             btn.setTitleColor(.black, for: .normal)
+            btn.titleLabel?.font = UIFont(name: "NanumGothicOTF", size: 14)
             return btn
         }()
+        closeBtn.addTarget(self, action: #selector(closeBtnTapped), for: .touchUpInside)
         
-        let registerBtn: UIButton = {
-            let btn = UIButton()
-            btn.setTitle("등록", for: .normal)
-            btn.setTitleColor(.black, for: .normal)
-            return btn
-        }()
+        
         
         self.addSubview(TitleLabel)
         TitleLabel.snp.makeConstraints { make in
