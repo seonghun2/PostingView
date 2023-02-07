@@ -29,10 +29,6 @@ class FilesView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-    }
-    
     func setUI() {
         backgroundColor = .white
         
@@ -91,7 +87,6 @@ class FilesView: UIView {
         filesStackview.addArrangedSubview(newFileView)
         newFileView.snp.makeConstraints { make in
             make.height.equalTo(30)
-            //make.width.equalTo(300)
         }
         newFileView.deleteClosure = {
             self.filesStackview.removeArrangedSubview(newFileView)

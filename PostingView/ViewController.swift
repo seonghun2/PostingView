@@ -24,10 +24,6 @@ class ViewController: UIViewController{
     
     var images: [UIImage] = []
     
-    var files: [String] = []
-    
-    var post: Post?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -53,10 +49,8 @@ class ViewController: UIViewController{
         }()
         
         scrollView.addSubview(stackView)
-        //*
+        
         stackView.snp.makeConstraints { make in
-            //make.edges.equalTo(view.snp.edges).inset(10)
-//            make.edges.equalToSuperview().inset(10)
             make.width.equalToSuperview().inset(17)
             make.centerX.top.bottom.equalToSuperview()
         }
@@ -64,11 +58,11 @@ class ViewController: UIViewController{
         topBarView.closeBtnClosure = {
             let vc = CloseAlertController()
             vc.saveClosure = {
-                self.post?.board = self.selectionView.titleLabel.text!
-                self.post?.title = self.textViews.titleTextField.text ?? ""
-                self.post?.content = self.textViews.detailTextView.text ?? ""
-                self.post?.images = self.images
-                print("post saved \(self.post)")
+                let post = Post(board: self.selectionView.titleLabel.text ?? "",
+                                title: self.textViews.titleTextField.text ?? "",
+                                content: self.textViews.detailTextView.text ?? "",
+                                images: self.images, files: [])
+                print("post saved \(post)")
             }
             self.present(vc, animated: true)
         }
@@ -82,8 +76,6 @@ class ViewController: UIViewController{
         stackView.addArrangedSubview(selectionView)
         selectionView.snp.makeConstraints { make in
             make.height.equalTo(70)
-            //make.left.right.equalToSuperview().inset(10)
-            //make.top.equalTo(topBarView.snp.bottom).inset(10)
         }
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(boardSelecting))
@@ -102,8 +94,6 @@ class ViewController: UIViewController{
         stackView.addArrangedSubview(textViews)
         textViews.snp.makeConstraints { make in
             make.height.equalTo(400)
-            //make.left.right.equalToSuperview().inset(20)
-            //make.top.equalTo(selectionView.snp.bottom).offset(40)
         }
         
         imagesView.imagePickerClosure = {
@@ -121,16 +111,11 @@ class ViewController: UIViewController{
         stackView.addArrangedSubview(imagesView)
         imagesView.snp.makeConstraints { make in
             make.height.equalTo(90)
-            //make.left.right.equalToSuperview().inset(20)
-            //make.top.equalTo(textViews.snp.bottom).offset(30)
         }
         
         let filesView = FilesView()
         stackView.addArrangedSubview(filesView)
         filesView.snp.makeConstraints { make in
-            //make.left.right.equalToSuperview().inset(20)
-           // make.top.equalTo(imagesView.snp.bottom).offset(50)
-            //make.bottom.equalToSuperview()
             make.height.greaterThanOrEqualTo(300)
         }
         filesView.documentPickerClosure = {
@@ -173,7 +158,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         imagesView.addImage(image: newImage!)
         print("이미지 수: \(self.numberOfImage)")
     
-        picker.dismiss(animated: true, completion: nil) // picker를 닫아줌
+        picker.dismiss(animated: true, completion: nil)
     }
 }
 

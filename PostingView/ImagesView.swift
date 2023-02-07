@@ -109,11 +109,8 @@ class ImagesView: UIView {
         
         imagesStackView.addArrangedSubview(newImage)
         newImage.snp.makeConstraints { make in
-            //make.top.bottom.equalToSuperview()
             make.height.equalTo(90)
             make.width.equalTo(90)
         }
-        
-        //xBtn.addTarget(self, action: #selector(removeImage(image: newImage)), for: .touchUpInside)
     }
 }

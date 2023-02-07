@@ -90,7 +90,4 @@ class BoardsBottomSheet: UIViewController {
         self.dismiss(animated: true)
     }
     
-//    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        self.dismiss(animated: true)
-//    }
 }
