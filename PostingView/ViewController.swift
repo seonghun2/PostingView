@@ -132,7 +132,6 @@ class ViewController: UIViewController{
     }
     
     @objc func boardSelecting() {
-        print("게시판 선택ㄱㄱ")
         let vc = BoardsBottomSheet()
         vc.modalPresentationStyle = .overFullScreen
         vc.boardSelectionClosure = { boardName in
