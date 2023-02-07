@@ -14,7 +14,7 @@ class TopBarView: UIView {
     let registerBtn: UIButton = {
         let btn = UIButton()
         btn.setTitle("등록", for: .normal)
-        btn.setTitleColor(.gray, for: .normal)
+        btn.setTitleColor(.systemGray4, for: .normal)
         btn.titleLabel?.font = UIFont(name: "NanumGothicOTF", size: 14)
         return btn
     }()

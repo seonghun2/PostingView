@@ -95,7 +95,7 @@ class ViewController: UIViewController{
             self.topBarView.registerBtn.isEnabled = true
         }
         textViews.saveBtnDisable = {
-            self.topBarView.registerBtn.setTitleColor(.gray, for: .normal)
+            self.topBarView.registerBtn.setTitleColor(.systemGray4, for: .normal)
             self.topBarView.registerBtn.isEnabled = false
         }
         
