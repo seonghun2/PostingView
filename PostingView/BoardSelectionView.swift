@@ -26,7 +26,7 @@ class BoardSelectionView: UIView {
     }
     
     func setUI() {
-        self.backgroundColor = .systemGray3
+        self.backgroundColor = .systemGray5
         self.layer.cornerRadius = 8
         self.addSubview(titleLabel)
         titleLabel.snp.makeConstraints { make in

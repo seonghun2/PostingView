@@ -37,7 +37,6 @@ class ViewController: UIViewController{
         view.backgroundColor = .white
         
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .blue
         view.addSubview(scrollView)
         scrollView.snp.makeConstraints { make in
             make.top.bottom.left.right.equalTo(view.safeAreaLayoutGuide)
@@ -47,7 +46,7 @@ class ViewController: UIViewController{
             let stackView = UIStackView()
             stackView.backgroundColor = .systemGray6
             stackView.axis = .vertical
-            stackView.spacing = 20
+            stackView.spacing = 0
             stackView.distribution = .fill
             stackView.alignment = .fill
             return stackView
@@ -64,7 +63,7 @@ class ViewController: UIViewController{
         
         topBarView.closeBtnClosure = {
             let vc = CloseAlertController()
-            vc.closeClosure = {
+            vc.saveClosure = {
                 self.post?.board = self.selectionView.titleLabel.text!
                 self.post?.title = self.textViews.titleTextField.text ?? ""
                 self.post?.content = self.textViews.detailTextView.text ?? ""
@@ -83,8 +82,8 @@ class ViewController: UIViewController{
         stackView.addArrangedSubview(selectionView)
         selectionView.snp.makeConstraints { make in
             make.height.equalTo(70)
-            //make.left.right.equalToSuperview().inset(20)
-            //make.top.equalTo(topBarView.snp.bottom).offset(40)
+            //make.left.right.equalToSuperview().inset(10)
+            //make.top.equalTo(topBarView.snp.bottom).inset(10)
         }
         
         let gesture = UITapGestureRecognizer(target: self, action: #selector(boardSelecting))
@@ -114,6 +113,10 @@ class ViewController: UIViewController{
                 print("이미지는 5개만..")
             }
         }
+        imagesView.imageRemoveClosure = {
+            self.numberOfImage -= 1
+            print("이미지 수: \(self.numberOfImage)")
+        }
         
         stackView.addArrangedSubview(imagesView)
         imagesView.snp.makeConstraints { make in
@@ -122,22 +125,25 @@ class ViewController: UIViewController{
             //make.top.equalTo(textViews.snp.bottom).offset(30)
         }
         
-        
         let filesView = FilesView()
         stackView.addArrangedSubview(filesView)
         filesView.snp.makeConstraints { make in
             //make.left.right.equalToSuperview().inset(20)
-            //make.top.equalTo(imagesView.snp.bottom).offset(20)
+           // make.top.equalTo(imagesView.snp.bottom).offset(50)
             //make.bottom.equalToSuperview()
             make.height.greaterThanOrEqualTo(300)
         }
         filesView.documentPickerClosure = {
             self.present(self.filePicker, animated: true)
         }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        //self.present(filePicker, animated: true)
+        let margin = UIView()
+        margin.backgroundColor = .systemGray6
+        view.addSubview(margin)
+        margin.snp.makeConstraints { make in
+            make.top.equalTo(imagesView.snp.bottom).offset(5)
+            make.left.right.equalToSuperview()
+            make.height.equalTo(7)
+        }
     }
     
     @objc func boardSelecting() {
@@ -165,6 +171,7 @@ extension ViewController: UIImagePickerControllerDelegate, UINavigationControlle
         self.numberOfImage += 1
         self.images.append(newImage!)
         imagesView.addImage(image: newImage!)
+        print("이미지 수: \(self.numberOfImage)")
     
         picker.dismiss(animated: true, completion: nil) // picker를 닫아줌
     }

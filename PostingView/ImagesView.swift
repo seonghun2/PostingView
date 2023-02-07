@@ -16,6 +16,8 @@ class ImagesView: UIView {
     }()
     
     var imagePickerClosure: (() -> ())?
+    
+    var imageRemoveClosure: (() -> ())?
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -27,6 +29,7 @@ class ImagesView: UIView {
     }
     
     func setUI() {
+        backgroundColor = .white
         let addBtn: UIButton = {
             let btn = UIButton()
             btn.setTitle("이미지 추가\n(최대 5개)", for: .normal)
@@ -55,8 +58,7 @@ class ImagesView: UIView {
             make.top.bottom.right.equalToSuperview()
             make.left.equalTo(addBtn.snp.right).offset(15)
         }
-        
-        //스크롤뷰 위에 스택뷰 얹어서 이미지 하나씩 추가하려고했는데 스택뷰 얹으니 스크롤이 안먹음
+    
         imagesScrollView.addSubview(imagesStackView)
         imagesStackView.snp.makeConstraints { make in
             make.top.bottom.left.right.equalToSuperview()
@@ -68,8 +70,9 @@ class ImagesView: UIView {
         imagePickerClosure?()
     }
     
-    @objc func removeImage() {
+    @objc func removeImage(image: UIImageView) {
         print("이미지 삭제")
+        imagesStackView.removeArrangedSubview(image)
     }
     
     func addImage(image: UIImage) {
@@ -80,6 +83,7 @@ class ImagesView: UIView {
             img.contentMode = .scaleAspectFill
             img.clipsToBounds = true
             img.layer.cornerRadius = 16
+            img.isUserInteractionEnabled = true
             return img
         }()
         
@@ -89,6 +93,11 @@ class ImagesView: UIView {
             btn.layer.cornerRadius = 15
             btn.backgroundColor = .gray
             btn.tintColor = .white
+            btn.addAction(UIAction{ _ in
+                self.imagesStackView.removeArrangedSubview(newImage)
+                newImage.removeFromSuperview()
+                self.imageRemoveClosure?()
+            }, for: .touchUpInside)
             return btn
         }()
         
@@ -100,11 +109,11 @@ class ImagesView: UIView {
         
         imagesStackView.addArrangedSubview(newImage)
         newImage.snp.makeConstraints { make in
-            //make.top.left.bottom.equalToSuperview()
+            //make.top.bottom.equalToSuperview()
             make.height.equalTo(90)
             make.width.equalTo(90)
         }
         
-        xBtn.addTarget(self, action: #selector(removeImage), for: .touchUpInside)
+        //xBtn.addTarget(self, action: #selector(removeImage(image: newImage)), for: .touchUpInside)
     }
 }

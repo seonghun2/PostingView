@@ -63,7 +63,7 @@ class TextViews: UIView {
         
         self.addSubview(detailTextView)
         detailTextView.snp.makeConstraints { make in
-            make.top.equalTo(titleTextField.snp.bottom).offset(20)
+            make.top.equalTo(titleTextField.snp.bottom).offset(2)
             make.left.right.bottom.equalToSuperview()
         }
     }

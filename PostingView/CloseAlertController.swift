@@ -9,14 +9,14 @@ import UIKit
 
 class CloseAlertController: UIAlertController {
 
-    var closeClosure: (() -> ())?
+    var saveClosure: (() -> ())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         addAction(UIAlertAction(title: "저장하고 닫기", style: .default) { _ in
             print("aa")
-            self.closeClosure?()
+            self.saveClosure?()
         })
         
         addAction(UIAlertAction(title: "저장하지 않고 닫기", style: .default) { _ in

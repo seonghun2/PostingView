@@ -33,6 +33,7 @@ class TopBarView: UIView {
     }
     
     func setUI() {
+        backgroundColor = .white
         let TitleLabel: UILabel = {
             let lbl = UILabel()
             lbl.text = "포스트 등록"
@@ -48,9 +49,7 @@ class TopBarView: UIView {
             return btn
         }()
         closeBtn.addTarget(self, action: #selector(closeBtnTapped), for: .touchUpInside)
-        
-        
-        
+    
         self.addSubview(TitleLabel)
         TitleLabel.snp.makeConstraints { make in
             make.centerX.centerY.equalToSuperview()
